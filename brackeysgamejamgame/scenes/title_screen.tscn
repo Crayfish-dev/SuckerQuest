@@ -1,0 +1,203 @@
+[gd_scene load_steps=17 format=3 uid="uid://cbjn3b2as64la"]
+
+[ext_resource type="Texture2D" uid="uid://dfjjijdd0ft7r" path="res://assets/title_screen_background.png" id="1_fgkus"]
+[ext_resource type="Script" uid="uid://dq5owx4e8xca5" path="res://scripts/title_screen.gd" id="1_mgrm8"]
+[ext_resource type="Texture2D" uid="uid://cvdo78piwucen" path="res://assets/buttons.png" id="2_s4lrb"]
+[ext_resource type="Texture2D" uid="uid://b5mq0cpp6syky" path="res://assets/title.png" id="2_sa3yf"]
+[ext_resource type="FontFile" uid="uid://v2l2up3q5sh3" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="5_dc4i4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgrm8"]
+atlas = ExtResource("2_s4lrb")
+region = Rect2(640, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc4i4"]
+atlas = ExtResource("2_s4lrb")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e54dn"]
+atlas = ExtResource("2_s4lrb")
+region = Rect2(320, 0, 320, 180)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yumr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgrm8")
+}],
+"loop": true,
+"name": &"exit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc4i4")
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e54dn")
+}],
+"loop": true,
+"name": &"play",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dc4i4"]
+size = Vector2(210, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e54dn"]
+size = Vector2(104, 32.5)
+
+[sub_resource type="Animation" id="Animation_mykxm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-169, 15)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("esc:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cs5ya"]
+resource_name = "enter"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-169, 15), Vector2(28, 15)]
+}
+
+[sub_resource type="Animation" id="Animation_e54dn"]
+resource_name = "esc"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("esc:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(235, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tklts"]
+_data = {
+&"RESET": SubResource("Animation_mykxm"),
+&"enter": SubResource("Animation_cs5ya"),
+&"esc": SubResource("Animation_e54dn")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_3yumr"]
+font = ExtResource("5_dc4i4")
+font_size = 32
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_mgrm8")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_fgkus")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-169, 15)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_3yumr")
+animation = &"none"
+
+[node name="Play" type="Area2D" parent="AnimatedSprite2D"]
+position = Vector2(-14, -7.5)
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Play"]
+position = Vector2(-197, -44.5)
+shape = SubResource("RectangleShape2D_dc4i4")
+
+[node name="Exit" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Exit"]
+position = Vector2(-112, 2.25)
+shape = SubResource("RectangleShape2D_e54dn")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Title" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-129, -130)
+scale = Vector2(2, 2)
+texture = ExtResource("2_sa3yf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tklts")
+}
+autoplay = "enter"
+
+[node name="esc" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="esc"]
+offset_left = -522.0
+offset_top = 52.0
+offset_right = -334.0
+offset_bottom = 81.0
+text = "*CLICK ESC"
+label_settings = SubResource("LabelSettings_3yumr")
+
+[connection signal="mouse_entered" from="AnimatedSprite2D/Play" to="." method="_on_play_mouse_entered"]
+[connection signal="mouse_exited" from="AnimatedSprite2D/Play" to="." method="_on_play_mouse_exited"]
+[connection signal="mouse_entered" from="AnimatedSprite2D/Exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="mouse_exited" from="AnimatedSprite2D/Exit" to="." method="_on_exit_mouse_exited"]

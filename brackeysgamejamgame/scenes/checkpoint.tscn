@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://cy1gemhqn6flk"]
+
+[ext_resource type="Script" uid="uid://cx13sd88chs5x" path="res://scripts/checkpoint.gd" id="1_ywqth"]
+[ext_resource type="Texture2D" uid="uid://cpxn2x16to38j" path="res://assets/checkpoint.png" id="2_vsimk"]
+[ext_resource type="AudioStream" uid="uid://bmqd2mop3yao2" path="res://assets/sounds/coffin_opening.mp3" id="3_yqsag"]
+[ext_resource type="AudioStream" uid="uid://cnoh5y4ixo3kn" path="res://assets/sounds/656643__ienba__game-reward.mp3" id="4_yqsag"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqsag"]
+atlas = ExtResource("2_vsimk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c45tw"]
+atlas = ExtResource("2_vsimk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_55jpe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqsag")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c45tw")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vc08m"]
+size = Vector2(30, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ywqth"]
+size = Vector2(102, 58)
+
+[node name="Checkpoint" type="StaticBody2D"]
+position = Vector2(0, 4)
+script = ExtResource("1_ywqth")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -23)
+sprite_frames = SubResource("SpriteFrames_55jpe")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, -22)
+shape = SubResource("RectangleShape2D_vc08m")
+
+[node name="Detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_ywqth")
+
+[node name="Opening" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_yqsag")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_yqsag")
+
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

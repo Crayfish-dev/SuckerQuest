@@ -1,0 +1,101 @@
+[gd_scene load_steps=12 format=3 uid="uid://wfp0cqctysdl"]
+
+[ext_resource type="Script" uid="uid://bfdmfc2ujt4mg" path="res://scripts/camera.gd" id="1_cvpoc"]
+[ext_resource type="Texture2D" uid="uid://c8kmflvbu1bra" path="res://assets/empty_blood.png" id="2_tmlye"]
+[ext_resource type="Texture2D" uid="uid://b4d8wsylorrvg" path="res://assets/full_blood.png" id="3_gtx3x"]
+[ext_resource type="Texture2D" uid="uid://be5x4hax1ke84" path="res://assets/health_empty.png" id="4_b05li"]
+[ext_resource type="Texture2D" uid="uid://dyya7xaxc17e8" path="res://assets/health.png" id="5_p8nh0"]
+[ext_resource type="Texture2D" uid="uid://htnluc5xsy47" path="res://assets/emty_bat_bar.png" id="6_ys67x"]
+[ext_resource type="Texture2D" uid="uid://2jmd4bw57dmd" path="res://assets/full_bat_bar.png" id="7_mq7sm"]
+[ext_resource type="Texture2D" uid="uid://dbuuta3dh8gyd" path="res://assets/cube.png" id="8_mq7sm"]
+
+[sub_resource type="Animation" id="Animation_5tt5c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Sprite2D2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0941176, 0.0784314, 0.145098, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mq7sm"]
+resource_name = "enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Sprite2D2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0941176, 0.0784314, 0.145098, 0), Color(0.0941176, 0.0784314, 0.145098, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_al5s2"]
+_data = {
+&"RESET": SubResource("Animation_5tt5c"),
+&"enter": SubResource("Animation_mq7sm")
+}
+
+[node name="Camera" type="Camera2D" node_paths=PackedStringArray("blood_bar", "health_bar", "bat_bar", "animation")]
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+script = ExtResource("1_cvpoc")
+blood_bar = NodePath("CanvasLayer/BloodBar")
+health_bar = NodePath("CanvasLayer/HealthBar")
+bat_bar = NodePath("CanvasLayer/BatBar")
+animation = NodePath("AnimationPlayer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(5, 5)
+transform = Transform2D(5, 0, 0, 5, 0, 0)
+
+[node name="BloodBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 19.0
+offset_bottom = 34.0
+fill_mode = 3
+texture_under = ExtResource("2_tmlye")
+texture_progress = ExtResource("3_gtx3x")
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 0.400002
+offset_top = 36.0
+offset_right = 40.4
+offset_bottom = 76.0
+value = 100.0
+texture_under = ExtResource("4_b05li")
+texture_progress = ExtResource("5_p8nh0")
+
+[node name="BatBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 20.6
+offset_top = 2.0
+offset_right = 60.6
+offset_bottom = 42.0
+fill_mode = 3
+texture_under = ExtResource("6_ys67x")
+texture_progress = ExtResource("7_mq7sm")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(0.0941176, 0.0784314, 0.145098, 0)
+position = Vector2(115.7, 66.4)
+scale = Vector2(17.3125, 9.4)
+texture = ExtResource("8_mq7sm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_al5s2")
+}
+autoplay = "RESET"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

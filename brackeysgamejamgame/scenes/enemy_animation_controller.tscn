@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1vn0glc7mr4p"]
+
+[ext_resource type="Script" uid="uid://dcfubfj27dqd6" path="res://scripts/enemy_animation_controller.gd" id="1_7ke0m"]
+
+[node name="EnemyAnimationController" type="Node2D"]
+script = ExtResource("1_7ke0m")

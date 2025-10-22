@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bp1ls7o032ooh"]
+
+[ext_resource type="Script" uid="uid://b4cb211my8d8s" path="res://scenes/archer.gd" id="1_b0l3x"]
+[ext_resource type="Texture2D" uid="uid://qlbq4ay2eq4n" path="res://icon.svg" id="1_jggnj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jggnj"]
+size = Vector2(12, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b0l3x"]
+radius = 64.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b0l3x"]
+size = Vector2(55, 6)
+
+[node name="Archer" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_b0l3x")
+sprite = NodePath("Icon")
+hp = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jggnj")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_jggnj")
+
+[node name="Detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_b0l3x")
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="DamageShape" type="Area2D" parent="Pivot"]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/DamageShape"]
+position = Vector2(33.5, 0)
+shape = SubResource("RectangleShape2D_b0l3x")
+debug_color = Color(0.956537, 0.163758, 0.337378, 0.42)

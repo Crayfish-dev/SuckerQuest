@@ -1,0 +1,211 @@
+[gd_scene load_steps=25 format=3 uid="uid://e3ahnxuqqcf1"]
+
+[ext_resource type="Script" uid="uid://cg5c2bcm3dkmq" path="res://scripts/scorpion.gd" id="1_mcw2v"]
+[ext_resource type="Texture2D" uid="uid://co8jowk5gu0tf" path="res://assets/scorpion.png" id="1_uytbs"]
+[ext_resource type="Texture2D" uid="uid://dll58tvgys172" path="res://assets/sting.png" id="3_gam5m"]
+[ext_resource type="Texture2D" uid="uid://cbys40sa8ypld" path="res://assets/emotion_points.png" id="4_62dlh"]
+[ext_resource type="PackedScene" uid="uid://chuit4muup8jh" path="res://scenes/enemy_health_bar.tscn" id="5_oaqn1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wes4n"]
+atlas = ExtResource("1_uytbs")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcw2v"]
+atlas = ExtResource("1_uytbs")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gam5m"]
+atlas = ExtResource("1_uytbs")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62dlh"]
+atlas = ExtResource("1_uytbs")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oaqn1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wes4n")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcw2v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gam5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62dlh")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jit3f"]
+size = Vector2(11, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_62dlh"]
+size = Vector2(25, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaqn1"]
+atlas = ExtResource("3_gam5m")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jit3f"]
+atlas = ExtResource("3_gam5m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omdpm"]
+atlas = ExtResource("3_gam5m")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qcyhm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oaqn1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jit3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omdpm")
+}],
+"loop": false,
+"name": &"bite",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uytbs"]
+radius = 24.0208
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wes4n"]
+radius = 169.027
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mokc4"]
+atlas = ExtResource("4_62dlh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pjqi"]
+atlas = ExtResource("4_62dlh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2aq02"]
+atlas = ExtResource("4_62dlh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1j5sl"]
+atlas = ExtResource("4_62dlh")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blvm1"]
+atlas = ExtResource("4_62dlh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jit3f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mokc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pjqi")
+}],
+"loop": false,
+"name": &"exclamation",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2aq02")
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j5sl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blvm1")
+}],
+"loop": false,
+"name": &"wonder",
+"speed": 1.0
+}]
+
+[node name="Scorpion" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_mcw2v")
+damage = 20
+sprite = NodePath("Sprite")
+hp = 60
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_oaqn1")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_jit3f")
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="DamageShape" type="Area2D" parent="Pivot"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/DamageShape"]
+position = Vector2(12.5, 5)
+shape = SubResource("RectangleShape2D_62dlh")
+debug_color = Color(1, 0.00636816, 0.0552023, 0.42)
+
+[node name="Bite" type="AnimatedSprite2D" parent="Pivot"]
+position = Vector2(19, 5)
+sprite_frames = SubResource("SpriteFrames_qcyhm")
+animation = &"bite"
+frame = 2
+frame_progress = 1.0
+
+[node name="Detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_uytbs")
+
+[node name="ChasingArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChasingArea"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_wes4n")
+
+[node name="EmotionPoint" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -10)
+sprite_frames = SubResource("SpriteFrames_jit3f")
+animation = &"wonder"
+autoplay = "none"
+
+[node name="EnemyHealthBar" parent="." node_paths=PackedStringArray("enemy") instance=ExtResource("5_oaqn1")]
+offset_left = -8.0
+offset_top = -6.0
+offset_right = 8.0
+offset_bottom = -5.0
+max_value = 60.0
+enemy = NodePath("..")
+
+[connection signal="body_entered" from="Pivot/DamageShape" to="." method="_on_damage_shape_body_entered"]
+[connection signal="animation_finished" from="Pivot/Bite" to="." method="_on_bite_animation_finished"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_entered" from="ChasingArea" to="." method="_on_chasing_area_body_entered"]
+[connection signal="body_exited" from="ChasingArea" to="." method="_on_chasing_area_body_exited"]

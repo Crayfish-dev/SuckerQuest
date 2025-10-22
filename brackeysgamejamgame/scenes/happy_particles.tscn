@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://tqfl37xp25bo"]
+
+[ext_resource type="Texture2D" uid="uid://b3130t0d0cxlp" path="res://assets/red.png" id="1_l853t"]
+
+[node name="HappyParticles" type="CPUParticles2D"]
+texture = ExtResource("1_l853t")
+explosiveness = 1.0
+randomness = 1.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 205.49
+initial_velocity_max = 493.15
+scale_amount_min = 5.0
+scale_amount_max = 7.0

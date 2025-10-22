@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://hia6qfkejs8m"]
+
+[ext_resource type="Script" uid="uid://dov4mp45ldbio" path="res://scripts/big_door.gd" id="1_dan0d"]
+[ext_resource type="Texture2D" uid="uid://dd73ve7esc0jd" path="res://assets/big_door.png" id="1_qlmng"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dan0d"]
+size = Vector2(6, 134)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3b18"]
+atlas = ExtResource("1_qlmng")
+region = Rect2(0, 0, 32, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owjas"]
+atlas = ExtResource("1_qlmng")
+region = Rect2(0, 0, 32, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3cpr"]
+atlas = ExtResource("1_qlmng")
+region = Rect2(32, 0, 32, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7w5vy"]
+atlas = ExtResource("1_qlmng")
+region = Rect2(0, 120, 32, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42v4m"]
+atlas = ExtResource("1_qlmng")
+region = Rect2(32, 120, 32, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e30b8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3b18")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owjas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3cpr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7w5vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42v4m")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3b18"]
+size = Vector2(20, 134)
+
+[node name="BigDoor" type="StaticBody2D"]
+script = ExtResource("1_dan0d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13, 1)
+shape = SubResource("RectangleShape2D_dan0d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_e30b8")
+animation = &"open"
+
+[node name="OpeningArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OpeningArea"]
+position = Vector2(6, 1)
+shape = SubResource("RectangleShape2D_j3b18")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="OpeningArea" to="." method="_on_opening_area_body_entered"]
